@@ -15,53 +15,62 @@ namespace TestTask.Persistence.Repositories
 
         public async Task<Employee?> GetByIdAsync(int id)
         {
-            return await Task.Run(() =>
-            {
-                using var session = sessionFactory.OpenSession();
-                return session.Get<Employee>(id);
-            });
+            using var session = sessionFactory.OpenSession();
+            return await session.GetAsync<Employee>(id);
         }
 
         public async Task<IEnumerable<Employee>> GetAllAsync()
         {
-            return await Task.Run(() =>
-            {
-                using var session = sessionFactory.OpenSession();
-                return session.QueryOver<Employee>().List();
-            });
+            using var session = sessionFactory.OpenSession();
+            return await session.QueryOver<Employee>().ListAsync();
         }
 
         public async Task AddAsync(Employee entity)
         {
-            await Task.Run(() =>
+            using var session = sessionFactory.OpenSession();
+            using var transaction = session.BeginTransaction();
+            try
             {
-                using var session = sessionFactory.OpenSession();
-                using var transaction = session.BeginTransaction();
-                session.Save(entity);
-                transaction.Commit();
-            });
+                await session.SaveAsync(entity);
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
         public async Task UpdateAsync(Employee entity)
         {
-            await Task.Run(() =>
+            using var session = sessionFactory.OpenSession();
+            using var transaction = session.BeginTransaction();
+            try
             {
-                using var session = sessionFactory.OpenSession();
-                using var transaction = session.BeginTransaction();
-                session.Update(entity);
-                transaction.Commit();
-            });
+                await session.UpdateAsync(entity);
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
         public async Task DeleteAsync(Employee entity)
         {
-            await Task.Run(() =>
+            using var session = sessionFactory.OpenSession();
+            using var transaction = session.BeginTransaction();
+            try
             {
-                using var session = sessionFactory.OpenSession();
-                using var transaction = session.BeginTransaction();
-                session.Delete(entity);
-                transaction.Commit();
-            });
+                await session.DeleteAsync(entity);
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
     }
 }

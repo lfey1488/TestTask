@@ -15,53 +15,62 @@ namespace TestTask.Persistence.Repositories
 
         public async Task<Order?> GetByIdAsync(int id)
         {
-            return await Task.Run(() =>
-            {
-                using var session = sessionFactory.OpenSession();
-                return session.Get<Order>(id);
-            });
+            using var session = sessionFactory.OpenSession();
+            return await session.GetAsync<Order>(id);
         }
 
         public async Task<IEnumerable<Order>> GetAllAsync()
         {
-            return await Task.Run(() =>
-            {
-                using var session = sessionFactory.OpenSession();
-                return session.QueryOver<Order>().List();
-            });
+            using var session = sessionFactory.OpenSession();
+            return await session.QueryOver<Order>().ListAsync();
         }
 
         public async Task AddAsync(Order entity)
         {
-            await Task.Run(() =>
+            using var session = sessionFactory.OpenSession();
+            using var transaction = session.BeginTransaction();
+            try
             {
-                using var session = sessionFactory.OpenSession();
-                using var transaction = session.BeginTransaction();
-                session.Save(entity);
-                transaction.Commit();
-            });
+                await session.SaveAsync(entity);
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
         public async Task UpdateAsync(Order entity)
         {
-            await Task.Run(() =>
+            using var session = sessionFactory.OpenSession();
+            using var transaction = session.BeginTransaction();
+            try
             {
-                using var session = sessionFactory.OpenSession();
-                using var transaction = session.BeginTransaction();
-                session.Update(entity);
-                transaction.Commit();
-            });
+                await session.UpdateAsync(entity);
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
         public async Task DeleteAsync(Order entity)
         {
-            await Task.Run(() =>
+            using var session = sessionFactory.OpenSession();
+            using var transaction = session.BeginTransaction();
+            try
             {
-                using var session = sessionFactory.OpenSession();
-                using var transaction = session.BeginTransaction();
-                session.Delete(entity);
-                transaction.Commit();
-            });
+                await session.DeleteAsync(entity);
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
     }
 }
