@@ -1,33 +1,39 @@
 ﻿using TeskTask.Core.Models;
+using TestTask.Application.Interfaces.Repositories;
 using TestTask.Application.Interfaces.Services;
 
 namespace TestTask.Application.Services
 {
     public class OrderService : IService<Order>
     {
-        public void Add(Order employee)
+        private readonly IRepository<Order> orderRepository;
+        public OrderService(IRepository<Order> orderRepository)
         {
-            throw new NotImplementedException();
+            this.orderRepository = orderRepository;
+        }
+        public Task AddAsync(Order employee)
+        {
+            return orderRepository.AddAsync(employee);
         }
 
-        public void Delete(Order employee)
+        public Task DeleteAsync(Order employee)
         {
-            throw new NotImplementedException();
+            return orderRepository.DeleteAsync(employee);
         }
 
-        public IEnumerable<Order> GetAll()
+        public Task<IEnumerable<Order>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return orderRepository.GetAllAsync();
         }
 
-        public Order? GetById(int id)
+        public Task<Order?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return orderRepository.GetByIdAsync(id);
         }
 
-        public void Update(Order employee)
+        public Task UpdateAsync(Order employee)
         {
-            throw new NotImplementedException();
+            return orderRepository.UpdateAsync(employee);
         }
     }
 }

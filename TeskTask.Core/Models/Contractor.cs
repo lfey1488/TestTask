@@ -13,22 +13,29 @@
                 throw new ArgumentException("The name cannot be empty", nameof(name));
             if (inn <= 0)
                 throw new ArgumentException("INN must be a positive number", nameof(inn));
-            Curator = curator ?? throw new ArgumentNullException(nameof(curator));
 
+            Curator = curator ?? throw new ArgumentNullException(nameof(curator), "Curator cannot be null");
             Name = name;
             Inn = inn;
         }
 
-        public void ChangeCurator(Employee newCurator)
-        {
-            Curator = newCurator ?? throw new ArgumentNullException(nameof(newCurator));
-        }
-
-        public void Rename(string newName)
+        public void ChangeName(string newName)
         {
             if (string.IsNullOrWhiteSpace(newName))
                 throw new ArgumentException("The name cannot be empty", nameof(newName));
+
             Name = newName;
+        }
+        public void ChangeInn(int newInn)
+        {
+            if (newInn <= 0)
+                throw new ArgumentException("INN must be a positive number", nameof(newInn));
+
+            Inn = newInn;
+        }
+        public void ChangeCurator(Employee newCurator)
+        {
+            Curator = newCurator ?? throw new ArgumentNullException(nameof(newCurator), "Curator cannot be null");
         }
     }
 }

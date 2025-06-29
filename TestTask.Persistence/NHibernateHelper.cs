@@ -17,7 +17,7 @@ namespace TestTask.Persistence
             return Fluently.Configure()
                 .Database(
                     MySQLConfiguration.Standard
-                        .ConnectionString("Server=localhost;Database=testtask;Uid=root;Pwd=yourpassword;")
+                        .ConnectionString("Server=localhost;Database=testtask;Uid=appuser;Pwd=appuserpass;")
                         .ShowSql()
                 )
                 .Mappings(m =>

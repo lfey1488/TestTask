@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "TestTask.Test": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

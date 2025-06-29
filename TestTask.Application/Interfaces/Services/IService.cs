@@ -2,10 +2,10 @@
 {
     public interface IService<T>
     {
-        IEnumerable<T> GetAll();
-        T? GetById(int id);
-        void Add(T employee);
-        void Update(T employee);
-        void Delete(T employee);
+        Task<IEnumerable<T>> GetAllAsync();
+        Task<T?> GetByIdAsync(int id);
+        Task AddAsync(T employee);
+        Task UpdateAsync(T employee);
+        Task DeleteAsync(T employee);
     }
 }

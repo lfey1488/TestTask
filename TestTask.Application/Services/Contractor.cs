@@ -1,32 +1,39 @@
-﻿using TestTask.Application.Interfaces.Services;
+﻿using TestTask.Application.Interfaces.Repositories;
+using TestTask.Application.Interfaces.Services;
 
 namespace TestTask.Application.Services
 {
     public class Contractor : IService<Contractor>
     {
-        public void Add(Contractor employee)
+        private readonly IRepository<Contractor> contractorRepository;
+        public Contractor(IRepository<Contractor> contractorRepository)
         {
-            throw new NotImplementedException();
+            this.contractorRepository = contractorRepository;
         }
 
-        public void Delete(Contractor employee)
+        public Task AddAsync(Contractor employee)
         {
-            throw new NotImplementedException();
+            return contractorRepository.AddAsync(employee);
         }
 
-        public IEnumerable<Contractor> GetAll()
+        public Task DeleteAsync(Contractor employee)
         {
-            throw new NotImplementedException();
+            return contractorRepository.DeleteAsync(employee);
         }
 
-        public Contractor? GetById(int id)
+        public Task<IEnumerable<Contractor>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return contractorRepository.GetAllAsync(); 
         }
 
-        public void Update(Contractor employee)
+        public Task<Contractor?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return contractorRepository.GetByIdAsync(id);
+        }
+
+        public Task UpdateAsync(Contractor employee)
+        {
+            return contractorRepository.UpdateAsync(employee);
         }
     }
 }
