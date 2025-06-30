@@ -1,9 +1,9 @@
 ﻿using FluentNHibernate.Mapping;
-using TeskTask.Core.Models;
+using TestTask.Persistence.Entities;
 
 namespace TestTask.Persistence.Mappings
 {
-    public class EmployeeMap : ClassMap<Employee>
+    public class EmployeeMap : ClassMap<EmployeeEntity>
     {
         public EmployeeMap()
         {
