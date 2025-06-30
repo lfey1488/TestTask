@@ -40,6 +40,9 @@ namespace TestTask.Persistence.Repositories
             try
             {
                 var entity = mapper.Map<OrderEntity>(model);
+                // По-хорошему настроить автоматический маппинг
+                entity.Contractor = await session.GetAsync<ContractorEntity>(model.ContractorId);
+                entity.Employee = await session.GetAsync<EmployeeEntity>(model.EmployeeId);
                 await session.SaveAsync(entity);
                 await transaction.CommitAsync();
             }

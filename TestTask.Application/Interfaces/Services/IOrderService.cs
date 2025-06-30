@@ -1,6 +1,8 @@
-﻿namespace TestTask.Application.Interfaces.Services
+﻿using TeskTask.Core.Models;
+
+namespace TestTask.Application.Interfaces.Services
 {
-    public interface IOrderService
+    public interface IOrderService : IService<Order>
     {
         Task ChangeDate(int orderId, DateTime date);
         Task ChangeAmount(int orderId, decimal amount);

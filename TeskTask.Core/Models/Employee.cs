@@ -9,7 +9,7 @@ namespace TeskTask.Core.Models
         public Position Position { get; private set; }
         public DateTime BirthDate { get; private set; }
 
-        public Employee(string fullName, Position position, DateTime birthDate)
+        private Employee(string fullName, Position position, DateTime birthDate)
         {
             if (string.IsNullOrWhiteSpace(fullName))
                 throw new ArgumentException("Full name cannot be empty", nameof(fullName));
@@ -19,6 +19,11 @@ namespace TeskTask.Core.Models
             FullName = fullName;
             Position = position;
             BirthDate = birthDate;
+        }
+
+        public static Employee Create(string fullName, Position position, DateTime birthDate)
+        {
+            return new Employee(fullName, position, birthDate);
         }
 
         public void ChangeFullName(string newFullName)

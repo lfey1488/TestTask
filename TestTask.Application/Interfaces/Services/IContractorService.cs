@@ -2,7 +2,7 @@
 
 namespace TestTask.Application.Interfaces.Services
 {
-    public interface IContractorService
+    public interface IContractorService : IService<Contractor>
     {
         Task ChangeName(int contractorId, string name);
         Task ChangeInn(int contractorId, int newInn);

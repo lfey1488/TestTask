@@ -8,7 +8,7 @@
         public int EmployeeId { get; private set; }
         public int ContractorId { get; private set; }
 
-        public Order(DateTime date, decimal amount, int employeeId, int contractorId)
+        private Order(DateTime date, decimal amount, int employeeId, int contractorId)
         {
             if (amount < 0)
                 throw new ArgumentException("The amount cannot be negative.", nameof(amount));
@@ -23,6 +23,11 @@
             ContractorId = contractorId;
             Date = date;
             Amount = amount;
+        }
+
+        public static Order Create(DateTime date, decimal amount, int employeeId, int contractorId)
+        {
+            return new Order(date, amount, employeeId, contractorId);
         }
 
         public void ChangeDate(DateTime newDate)

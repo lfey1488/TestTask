@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="TestTask.WpfApp.Views.OrderView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DockPanel>
+        <DataGrid ItemsSource="{Binding Orders}" SelectedItem="{Binding SelectedOrder}" AutoGenerateColumns="False" DockPanel.Dock="Top" Margin="10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat=d}" />
+                <DataGridTextColumn Header="Сумма" Binding="{Binding Amount}" />
+                <DataGridTextColumn Header="Сотрудник (ID)" Binding="{Binding EmployeeId}" />
+                <DataGridTextColumn Header="Контрагент (ID)" Binding="{Binding ContractorId}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+            <Button Content="Добавить" Command="{Binding AddCommand}" Margin="5"/>
+            <Button Content="Редактировать" Command="{Binding EditCommand}" Margin="5"/>
+            <Button Content="Удалить" Command="{Binding DeleteCommand}" Margin="5"/>
+        </StackPanel>
+    </DockPanel>
+</UserControl>

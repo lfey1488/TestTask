@@ -1,12 +1,10 @@
-﻿using TeskTask.Core.Models;
-
-namespace TestTask.Persistence.Entities
+﻿namespace TestTask.Persistence.Entities
 {
     public class ContractorEntity
     {
-        public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public int Inn { get; set; }
-        public EmployeeEntity Curator { get; set; } = null!;
+        public virtual int Id { get; set; }
+        public virtual string Name { get; set; } = string.Empty;
+        public virtual int Inn { get; set; }
+        public virtual EmployeeEntity Curator { get; set; } = null!;
     }
 }

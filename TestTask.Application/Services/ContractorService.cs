@@ -4,7 +4,7 @@ using TestTask.Application.Interfaces.Services;
 
 namespace TestTask.Application.Services
 {
-    public class ContractorService : IService<Contractor>, IContractorService
+    public class ContractorService : IContractorService
     {
         private readonly IRepository<Contractor> contractorRepository;
         private readonly IRepository<Employee> employeeRepository;

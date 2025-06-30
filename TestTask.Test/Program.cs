@@ -13,13 +13,14 @@ class Program
         {
             using var connection = new MySqlConnection("Server=localhost;Database=testtask;Uid=appuser;Pwd=appuserpass;");
             connection.Open();
-            Debug.WriteLine("Подключение к базе данных успешно!");
+            Console.WriteLine("Подключение к базе данных успешно!");
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Ошибка подключения к базе данных: {ex.Message}");
+            Console.WriteLine($"Ошибка подключения к базе данных: {ex.Message}");
             return;
         }
+        Console.ReadLine();
         var serviceProvider = new ServiceCollection()
             .AddFluentMigratorCore()
             .ConfigureRunner(rb => rb

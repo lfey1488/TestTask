@@ -7,7 +7,7 @@
         public int Inn { get; private set; }
         public int CuratorId { get; private set; }
 
-        public Contractor(string name, int inn, int curatorId)
+        private Contractor(string name, int inn, int curatorId)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("The name cannot be empty", nameof(name));
@@ -19,6 +19,11 @@
             CuratorId = curatorId;
             Name = name;
             Inn = inn;
+        }
+
+        public static Contractor Create(string name, int inn, int curatorId)
+        {
+            return new Contractor(name, inn, curatorId);
         }
 
         public void ChangeName(string newName)

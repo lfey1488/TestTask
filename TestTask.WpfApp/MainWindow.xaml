@@ -1,0 +1,17 @@
+﻿<Window x:Class="TestTask.WpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:views="clr-namespace:TestTask.WpfApp.Views"
+        Title="Управление сущностями" Height="600" Width="900">
+    <TabControl>
+        <TabItem Header="Сотрудники" DataContext="{Binding EmployeeViewModel}">
+            <views:EmployeeView />
+        </TabItem>
+        <TabItem Header="Контрагенты" DataContext="{Binding ContractorViewModel}">
+            <views:ContractorView />
+        </TabItem>
+        <TabItem Header="Заказы" DataContext="{Binding OrderViewModel}">
+            <views:OrderView />
+        </TabItem>
+    </TabControl>
+</Window>
