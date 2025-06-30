@@ -8,28 +8,33 @@ namespace TestTask.Application.Services
     {
         private readonly IRepository<Contractor> contractorRepository;
         private readonly IRepository<Employee> employeeRepository;
-        public ContractorService(IRepository<Contractor> contractorRepository, IRepository<Employee> employeeService)
+        public ContractorService(IRepository<Contractor> contractorRepository, IRepository<Employee> employeeRepository)
         {
             this.contractorRepository = contractorRepository;
-            this.employeeRepository = employeeService;
+            this.employeeRepository = employeeRepository;
         }
 
         public async Task AddAsync(Contractor employee)
         {
+            if (employee is null)
+                throw new ArgumentNullException(nameof(employee), "Contractor cannot be null");
+
             await contractorRepository.AddAsync(employee);
         }
 
-        public async Task ChangeCurator(int contractorId, Employee newCurator)
+        public async Task ChangeCurator(int contractorId, int newCuratorId)
         {
-            if (newCurator is null)
-                throw new ArgumentNullException(nameof(newCurator), "New curator cannot be null");
+            if (newCuratorId <= 0)
+                throw new ArgumentException("Curator ID must be a positive number.", nameof(newCuratorId));
             if (contractorId <= 0)
                 throw new ArgumentException("Contractor ID must be a positive number.", nameof(contractorId));
 
             var contractor = await contractorRepository.GetByIdAsync(contractorId)
                 ?? throw new Exception("Contractor not found");
+            var newCurator = await employeeRepository.GetByIdAsync(newCuratorId)
+                ?? throw new Exception("Curator not found");
 
-            contractor.ChangeCurator(newCurator);
+            contractor.ChangeCurator(newCurator.Id);
             await contractorRepository.UpdateAsync(contractor);
         }
 
@@ -61,9 +66,15 @@ namespace TestTask.Application.Services
             await contractorRepository.UpdateAsync(contractor);
         }
 
-        public async Task DeleteAsync(Contractor employee)
+        public async Task DeleteAsync(int contractorId)
         {
-            await contractorRepository.DeleteAsync(employee);
+            if (contractorId <= 0)
+                throw new ArgumentException("Employee ID must be a positive number.", nameof(contractorId));
+
+            var contractor = await contractorRepository.GetByIdAsync(contractorId)
+                ?? throw new Exception("Contractor not found");
+
+            await contractorRepository.DeleteAsync(contractor);
         }
 
         public async Task<IEnumerable<Contractor>> GetAllAsync()
@@ -73,11 +84,17 @@ namespace TestTask.Application.Services
 
         public async Task<Contractor?> GetByIdAsync(int id)
         {
+            if (id <= 0)
+                throw new ArgumentException("Contractor ID must be a positive number.", nameof(id));
+
             return await contractorRepository.GetByIdAsync(id);
         }
 
         public async Task UpdateAsync(Contractor employee)
         {
+            if (employee is null)
+                throw new ArgumentNullException(nameof(employee), "Contractor cannot be null");
+
             await contractorRepository.UpdateAsync(employee);
         }
     }

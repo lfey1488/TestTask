@@ -5,16 +5,22 @@
         public int Id { get; private set; }
         public DateTime Date { get; private set; }
         public decimal Amount { get; private set; }
-        public Employee Employee { get; private set; }
-        public Contractor Contractor { get; private set; }
+        public int EmployeeId { get; private set; }
+        public int ContractorId { get; private set; }
 
-        public Order(DateTime date, decimal amount, Employee employee, Contractor contractor)
+        public Order(DateTime date, decimal amount, int employeeId, int contractorId)
         {
             if (amount < 0)
                 throw new ArgumentException("The amount cannot be negative.", nameof(amount));
+            if (date > DateTime.Now)
+                throw new ArgumentException("The date cannot be in the future.", nameof(date));
+            if (employeeId <= 0)
+                throw new ArgumentException("Employee ID must be a positive number.", nameof(employeeId));
+            if (contractorId <= 0)
+                throw new ArgumentException("Contractor ID must be a positive number.", nameof(contractorId));
 
-            Employee = employee ?? throw new ArgumentNullException(nameof(employee), "Employee cannot be null");
-            Contractor = contractor ?? throw new ArgumentNullException(nameof(contractor), "Contractor cannot be null");
+            EmployeeId = employeeId;
+            ContractorId = contractorId;
             Date = date;
             Amount = amount;
         }
@@ -34,14 +40,19 @@
             Amount = newAmount;
         }
 
-        public void ChangeEmployee(Employee newEmployee)
+        public void ChangeEmployee(int newEmployeeId)
         {
-            Employee = newEmployee ?? throw new ArgumentNullException(nameof(newEmployee), "Employee cannot be null");
+            if (newEmployeeId <= 0)
+                throw new ArgumentException("Employee ID must be a positive number.", nameof(newEmployeeId));
+
+            EmployeeId = newEmployeeId;
         }
 
-        public void ChangeContractor(Contractor newContractor)
+        public void ChangeContractor(int newContractorId)
         {
-            Contractor = newContractor ?? throw new ArgumentNullException(nameof(newContractor), "Contractor cannot be null");
+            if (newContractorId <= 0)
+                throw new ArgumentException("Contractor ID must be a positive number.", nameof(newContractorId));
+            ContractorId = newContractorId;
         }
     }
 }

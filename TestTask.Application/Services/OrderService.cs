@@ -21,6 +21,7 @@ namespace TestTask.Application.Services
         {
             if (order is null)
                 throw new ArgumentNullException(nameof(order), "Order cannot be null");
+
             await orderRepository.AddAsync(order);
         }
 
@@ -46,7 +47,7 @@ namespace TestTask.Application.Services
             var contractor = await contractorRepository.GetByIdAsync(contractorId)
                 ?? throw new Exception("Contractor not found");
 
-            order.ChangeContractor(contractor);
+            order.ChangeContractor(contractor.Id);
             await orderRepository.UpdateAsync(order);
         }
 
@@ -75,14 +76,17 @@ namespace TestTask.Application.Services
             var employee = await employeeRepository.GetByIdAsync(employeeId)
                 ?? throw new Exception("Employee not found");
 
-            order.ChangeEmployee(employee);
+            order.ChangeEmployee(employee.Id);
             await orderRepository.UpdateAsync(order);
         }
 
-        public async Task DeleteAsync(Order order)
+        public async Task DeleteAsync(int orderId)
         {
-            if (order is null)
-                throw new ArgumentNullException(nameof(order), "Order cannot be null");
+            if (orderId <= 0)
+                throw new ArgumentException("Order ID must be a positive number.", nameof(orderId));
+
+            var order = await orderRepository.GetByIdAsync(orderId)
+                ?? throw new Exception("Order not found");
             await orderRepository.DeleteAsync(order);
         }
 
@@ -95,6 +99,7 @@ namespace TestTask.Application.Services
         {
             if (id <= 0)
                 throw new ArgumentException("ID must be a positive number.", nameof(id));
+
             return await orderRepository.GetByIdAsync(id);
         }
 
@@ -102,6 +107,7 @@ namespace TestTask.Application.Services
         {
             if (order is null)
                 throw new ArgumentNullException(nameof(order), "Order cannot be null");
+
             await orderRepository.UpdateAsync(order);
         }
     }

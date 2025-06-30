@@ -14,6 +14,9 @@ namespace TestTask.Application.Services
         }
         public async Task AddAsync(Employee employee)
         {
+            if (employee is null)
+                throw new ArgumentNullException(nameof(employee), "Employee cannot be null");
+
             await employeeRepository.AddAsync(employee);
         }
 
@@ -55,8 +58,13 @@ namespace TestTask.Application.Services
             employee.ChangePosition(newPosition);
         }
 
-        public async Task DeleteAsync(Employee employee)
+        public async Task DeleteAsync(int employeeId)
         {
+            if (employeeId <= 0)
+                throw new ArgumentException("Employee ID must be a positive number.", nameof(employeeId));
+            var employee = await employeeRepository.GetByIdAsync(employeeId)
+                ?? throw new Exception("Employee not found");
+
             await employeeRepository.DeleteAsync(employee);
         }
 
@@ -67,11 +75,17 @@ namespace TestTask.Application.Services
 
         public async Task<Employee?> GetByIdAsync(int id)
         {
+            if (id <= 0)
+                throw new ArgumentException("Employee ID must be a positive number.", nameof(id));
+
             return await employeeRepository.GetByIdAsync(id);
         }
 
         public async Task UpdateAsync(Employee employee)
         {
+            if (employee is null)
+                throw new ArgumentNullException(nameof(employee), "Employee cannot be null");
+
             await employeeRepository.UpdateAsync(employee);
         }
     }

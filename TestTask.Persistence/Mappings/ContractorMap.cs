@@ -11,7 +11,7 @@ namespace TestTask.Persistence.Mappings
             Id(x => x.Id).GeneratedBy.Identity();
             Map(x => x.Name).Not.Nullable();
             Map(x => x.Inn).Not.Nullable();
-            References(x => x.Curator).Column("CuratorId").Not.Nullable();
+            References(x => x.CuratorId).Column("CuratorId").Not.Nullable();
         }
     }
 }

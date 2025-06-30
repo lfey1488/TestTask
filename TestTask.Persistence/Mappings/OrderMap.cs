@@ -11,8 +11,8 @@ namespace TestTask.Persistence.Mappings
             Id(x => x.Id).GeneratedBy.Identity();
             Map(x => x.Date).Not.Nullable();
             Map(x => x.Amount).Not.Nullable();
-            References(x => x.Employee).Column("EmployeeId").Not.Nullable();
-            References(x => x.Contractor).Column("ContractorId").Not.Nullable();
+            References(x => x.EmployeeId).Column("EmployeeId").Not.Nullable();
+            References(x => x.ContractorId).Column("ContractorId").Not.Nullable();
         }
     }
 }

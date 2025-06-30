@@ -6,6 +6,6 @@
         Task<T?> GetByIdAsync(int id);
         Task AddAsync(T model);
         Task UpdateAsync(T model);
-        Task DeleteAsync(T model);
+        Task DeleteAsync(int id);
     }
 }
