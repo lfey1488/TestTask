@@ -24,6 +24,7 @@ namespace TestTask.WpfApp
     {
         public static IServiceProvider ServiceProvider { get; private set; } = null!;
 
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);

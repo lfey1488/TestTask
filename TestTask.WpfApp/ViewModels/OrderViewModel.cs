@@ -11,9 +11,9 @@ namespace TestTask.WpfApp.ViewModels
 {
     public partial class OrderViewModel : ObservableObject
     {
-        private readonly IOrderService _orderService;
-        private readonly IEmployeeService _employeeService;
-        private readonly IContractorService _contractorService;
+        private readonly IOrderService orderService;
+        private readonly IEmployeeService employeeService;
+        private readonly IContractorService contractorService;
 
         public ObservableCollection<Order> Orders { get; } = new();
 
@@ -29,9 +29,9 @@ namespace TestTask.WpfApp.ViewModels
             IEmployeeService employeeService,
             IContractorService contractorService)
         {
-            _orderService = orderService;
-            _employeeService = employeeService;
-            _contractorService = contractorService;
+            this.orderService = orderService;
+            this.employeeService = employeeService;
+            this.contractorService = contractorService;
 
             AddCommand = new AsyncRelayCommand(AddOrderAsync);
             EditCommand = new AsyncRelayCommand(EditOrderAsync, CanEditOrDelete);
@@ -49,20 +49,20 @@ namespace TestTask.WpfApp.ViewModels
         private async Task LoadOrdersAsync()
         {
             Orders.Clear();
-            var orders = await _orderService.GetAllAsync();
+            var orders = await orderService.GetAllAsync();
             foreach (var order in orders)
                 Orders.Add(order);
         }
 
         private async Task AddOrderAsync()
         {
-            var employees = await _employeeService.GetAllAsync();
-            var contractors = await _contractorService.GetAllAsync();
+            var employees = await employeeService.GetAllAsync();
+            var contractors = await contractorService.GetAllAsync();
             var vm = new OrderEditViewModel(employees, contractors);
             var window = new OrderEditView { DataContext = vm };
             if (window.ShowDialog() == true)
             {
-                await _orderService.AddAsync(vm.GetResult());
+                await orderService.AddAsync(vm.GetResult());
                 await LoadOrdersAsync();
             }
         }
@@ -70,13 +70,13 @@ namespace TestTask.WpfApp.ViewModels
         private async Task EditOrderAsync()
         {
             if (SelectedOrder == null) return;
-            var employees = await _employeeService.GetAllAsync();
-            var contractors = await _contractorService.GetAllAsync();
+            var employees = await employeeService.GetAllAsync();
+            var contractors = await contractorService.GetAllAsync();
             var vm = new OrderEditViewModel(SelectedOrder, employees, contractors);
             var window = new OrderEditView { DataContext = vm };
             if (window.ShowDialog() == true)
             {
-                await _orderService.UpdateAsync(vm.GetResult());
+                await orderService.UpdateAsync(vm.GetResult());
                 await LoadOrdersAsync();
             }
         }
@@ -84,7 +84,7 @@ namespace TestTask.WpfApp.ViewModels
         private async Task DeleteOrderAsync()
         {
             if (SelectedOrder == null) return;
-            await _orderService.DeleteAsync(SelectedOrder.Id);
+            await orderService.DeleteAsync(SelectedOrder.Id);
             await LoadOrdersAsync();
         }
 

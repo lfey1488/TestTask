@@ -62,6 +62,7 @@ namespace TestTask.Persistence.Repositories
             try
             {
                 var entity = mapper.Map<ContractorEntity>(model);
+                entity.Curator = await session.GetAsync<EmployeeEntity>(model.CuratorId);
                 await session.UpdateAsync(entity);
                 await transaction.CommitAsync();
             }
@@ -79,6 +80,7 @@ namespace TestTask.Persistence.Repositories
             try
             {
                 var entity = mapper.Map<ContractorEntity>(model);
+                entity.Curator = await session.GetAsync<EmployeeEntity>(model.CuratorId);
                 await session.DeleteAsync(entity);
                 await transaction.CommitAsync();
             }

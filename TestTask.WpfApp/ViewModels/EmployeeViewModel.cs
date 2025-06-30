@@ -2,8 +2,10 @@
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows;
 using TeskTask.Core.Models;
 using TestTask.Application.Interfaces.Services;
+using TestTask.Application.Services;
 using TestTask.WpfApp.ViewModels.Edit;
 using TestTask.WpfApp.Views.Edit;
 
@@ -11,7 +13,9 @@ namespace TestTask.WpfApp.ViewModels
 {
     public partial class EmployeeViewModel : ObservableObject
     {
-        private readonly IEmployeeService _employeeService;
+        private readonly IEmployeeService employeeService;
+        private readonly IOrderService orderService;
+        private readonly IContractorService contractorService;
 
         public ObservableCollection<Employee> Employees { get; } = new();
 
@@ -22,9 +26,11 @@ namespace TestTask.WpfApp.ViewModels
         public IAsyncRelayCommand EditCommand { get; }
         public IAsyncRelayCommand DeleteCommand { get; }
 
-        public EmployeeViewModel(IEmployeeService employeeService)
+        public EmployeeViewModel(IEmployeeService employeeService, IOrderService orderService, IContractorService contractorService)
         {
-            _employeeService = employeeService;
+            this.employeeService = employeeService;
+            this.orderService = orderService;
+            this.contractorService = contractorService;
 
             AddCommand = new AsyncRelayCommand(AddEmployeeAsync);
             EditCommand = new AsyncRelayCommand(EditEmployeeAsync, CanEditOrDelete);
@@ -42,7 +48,7 @@ namespace TestTask.WpfApp.ViewModels
         private async Task LoadEmployeesAsync()
         {
             Employees.Clear();
-            var employees = await _employeeService.GetAllAsync();
+            var employees = await employeeService.GetAllAsync();
             foreach (var employee in employees)
                 Employees.Add(employee);
         }
@@ -53,7 +59,7 @@ namespace TestTask.WpfApp.ViewModels
             var window = new EmployeeEditView { DataContext = vm };
             if (window.ShowDialog() == true)
             {
-                await _employeeService.AddAsync(vm.GetResult());
+                await employeeService.AddAsync(vm.GetResult());
                 await LoadEmployeesAsync();
             }
         }
@@ -65,7 +71,7 @@ namespace TestTask.WpfApp.ViewModels
             var window = new EmployeeEditView { DataContext = vm };
             if (window.ShowDialog() == true)
             {
-                await _employeeService.UpdateAsync(vm.GetResult());
+                await employeeService.UpdateAsync(vm.GetResult());
                 await LoadEmployeesAsync();
             }
         }
@@ -73,7 +79,31 @@ namespace TestTask.WpfApp.ViewModels
         private async Task DeleteEmployeeAsync()
         {
             if (SelectedEmployee == null) return;
-            await _employeeService.DeleteAsync(SelectedEmployee.Id);
+
+            // Проверяем, есть ли заказы с этим сотрудником
+            var orders = await orderService.GetAllAsync();
+            if (orders.Any(o => o.EmployeeId == SelectedEmployee.Id))
+            {
+                MessageBox.Show(
+                    "Нельзя удалить сотрудника, так как он используется в заказах.",
+                    "Удаление запрещено",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                return;
+            }
+            // Проверяем, есть ли контрагенты с этим сотрудником
+            var contractors = await contractorService.GetAllAsync();
+            if (contractors.Any(c => c.Id == SelectedEmployee.Id))
+            {
+                MessageBox.Show(
+                    "Нельзя удалить сотрудника, так как он используется в контрагентах.",
+                    "Удаление запрещено",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                return;
+            }
+
+            await employeeService.DeleteAsync(SelectedEmployee.Id);
             await LoadEmployeesAsync();
         }
 

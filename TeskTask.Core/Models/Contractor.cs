@@ -11,7 +11,7 @@
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("The name cannot be empty", nameof(name));
-            if (inn <= 0)
+            if (inn < 0)
                 throw new ArgumentException("INN must be a positive number", nameof(inn));
             if (curatorId <= 0)
                 throw new ArgumentException("Curator ID must be a positive number", nameof(curatorId));
