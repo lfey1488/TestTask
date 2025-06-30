@@ -14,8 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решен
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTask.Test", "TestTask.Test\TestTask.Test.csproj", "{BB8EC3D8-7817-408E-84E6-5D09A17A1587}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTask.WpfApp", "TestTask.WpfApp\TestTask.WpfApp.csproj", "{0BC9035A-2BFC-4E3F-9291-409AA3934173}"
 EndProject
 Global
@@ -36,10 +34,6 @@ Global
 		{967FDAFC-77BB-4475-82F6-616BA9215587}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{967FDAFC-77BB-4475-82F6-616BA9215587}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{967FDAFC-77BB-4475-82F6-616BA9215587}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BB8EC3D8-7817-408E-84E6-5D09A17A1587}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BB8EC3D8-7817-408E-84E6-5D09A17A1587}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BB8EC3D8-7817-408E-84E6-5D09A17A1587}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BB8EC3D8-7817-408E-84E6-5D09A17A1587}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0BC9035A-2BFC-4E3F-9291-409AA3934173}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0BC9035A-2BFC-4E3F-9291-409AA3934173}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BC9035A-2BFC-4E3F-9291-409AA3934173}.Release|Any CPU.ActiveCfg = Release|Any CPU

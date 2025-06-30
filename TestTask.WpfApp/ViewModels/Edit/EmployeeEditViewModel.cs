@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using TeskTask.Core.Enums;
 using TeskTask.Core.Models;
@@ -8,7 +7,7 @@ namespace TestTask.WpfApp.ViewModels.Edit
 {
     public class EmployeeEditViewModel : INotifyPropertyChanged
     {
-        private string _fullName;
+        private string _fullName = string.Empty;
         private Position _position;
         private DateTime _birthDate;
 

@@ -1,11 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using System.Windows;
 using TeskTask.Core.Models;
 using TestTask.Application.Interfaces.Services;
-using TestTask.Application.Services;
 using TestTask.WpfApp.ViewModels.Edit;
 using TestTask.WpfApp.Views.Edit;
 

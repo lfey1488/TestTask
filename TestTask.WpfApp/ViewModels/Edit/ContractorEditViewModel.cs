@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using TeskTask.Core.Models;
 
@@ -7,7 +6,7 @@ namespace TestTask.WpfApp.ViewModels.Edit
 {
     public class ContractorEditViewModel : INotifyPropertyChanged
     {
-        private string _name;
+        private string _name = string.Empty;
         private int _inn;
         private int _curatorId;
 
